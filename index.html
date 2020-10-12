@@ -14,9 +14,9 @@
     <script type="text/javascript">
     </script>
     <!-- <script type="text/javascript" src="https://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script> -->
-    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="vue.js"></script>
-    <script type="text/javascript" src="vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.6/dist/vue-router.min.js"></script>
     <link rel="stylesheet" href="main.css">
 </head>
 
@@ -32,7 +32,7 @@
         <router-link to="form/sign"><img src="img/signup.png" alt="马上报名"></router-link>
         <router-link to="introduce"><img src="img/introduction.png" alt="部门介绍"></router-link>
         <router-link to="login"><img src="img/search.png" alt="报名查询"></router-link>
-        <p style="font-size: 40px;">点击报名查询可修改信息</p>
+        <!-- <p style="font-size: 40px;">点击报名查询可修改信息</p> -->
         <div style="height: 400px;"></div>
     </div>
 </template>
@@ -53,8 +53,14 @@
             </p>
             <p>年级</p>
             <p>
-                <input type="radio" name="grade" id="grade1" value="grade1" v-model="grade"><label for="grade1">大一</label>
-                <input type="radio" name="grade" id="grade2" value="grade2" v-model="grade"><label for="grade2">大二</label>
+                <input type="radio" name="grade" id="grade1" value="大一" v-model="grade"><label for="grade1">大一</label>
+                <input type="radio" name="grade" id="grade2" value="大二" v-model="grade"><label for="grade2">大二</label>
+            </p>
+            <p>校区</p>
+            <p>
+                <select name="campus" id="campus" v-model="campus">
+                    <option v-for="one in campusData">{{one}}</option>
+                </select>
             </p>
             <p>学院</p>
             <select name="college" id="college" v-model="college">
@@ -75,8 +81,8 @@
             </select>
             <p>是否服从调剂</p>
             <p>
-                <input type="radio" name="assign" id="assign-yes" value="0" v-model="adjust"><label for="assign-yes">是</label>
-                <input type="radio" name="assign" id="assign-no" value="1" v-model="adjust"><label for="assign-no">否</label>
+                <input type="radio" name="assign" id="assign-yes" value="1" v-model="adjust"><label for="assign-yes">是</label>
+                <input type="radio" name="assign" id="assign-no" value="0" v-model="adjust"><label for="assign-no">否</label>
             </p>
             <p>简单介绍下自己吧</p>
             <textarea id="introduce" v-model="description"></textarea>
@@ -96,8 +102,8 @@
             <div class="introduce" id="department-detail" v-html="curDepDescription"></div>
             <div class="btn-arrow" style="transform: scale(0.8,0.75) rotate(180deg);" v-on:click="next()"></div>
         </div>
-        <router-link to="form/sign" v-if="curDepId==2||curDepId==5||curDepId==6"><img src="img/sign.png" alt="马上报名" id="btn-introduce-sign"></router-link>
-        <div style="font-size: 45px; width: 80%; margin-top: 100px;" v-else>本学期只有技术部、视觉设计部和视频部接受招新，其他部门将于明年春季进行招新，该部门资料仅供参考，望周知</div>
+        <router-link to="form/sign" v-if="curDepId==0||curDepId==1||curDepId==2"><img src="img/sign.png" alt="马上报名" id="btn-introduce-sign"></router-link>
+        <div style="font-size: 45px; width: 80%; margin-top: 100px;" v-else>本学期只有技术部、视觉设计部和视频部进行招新，其他部门的招新将于明年春季进行</div>
     </div>
 </template>
 
@@ -110,12 +116,13 @@
             <p>姓名<span id="inquiry-name">{{dataQuery.name}}</span></p>
             <p>性别<span id="inquiry-gender">{{dataQuery.sex}}</span></p>
             <p>年级<span id="inquiry-grade">{{dataQuery.grade}}</span></p>
+            <p>校区<span id='inquiry-campus'>{{dataQuery.campus}}</span></p>
             <p>学院<span id="inquiry-college">{{dataQuery.college}}</span></p>
             <p>手机<span id="inquiry-phone">{{dataQuery.tel}}</span></p>
             <p>第一意向<span id="inquiry-intention1">{{dataQuery.first}}</span></p>
             <p>第二意向<span id="inquiry-intention2">{{dataQuery.second}}</span></p>
             <p>是否服从调剂<span id="inquiry-assign">{{dataQuery.adjust}}</span></p>
-            <p>简单介绍下自己吧</p>
+            <p>自我介绍</p>
             <div class="div-inquiry-introduce" style="border-width: 4px 0; border-color: white; border-style:solid;">{{dataQuery.description}}</div>
         </div>
 
