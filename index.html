@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"> 使用逻辑分辨率-->
+    <meta content="user-scalable=no" name="viewport"><!--使用物理分辨率-->
+    <title>百步梯秋季招新报名</title>
+    <style type="text/css">
+    body, textarea, input[type="text"] {
+        font-family: 微软雅黑, STHeitiTC-Light;
+    }
+    </style>
+    <script type="text/javascript">
+    </script>
+    <!-- <script type="text/javascript" src="https://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script> -->
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript" src="vue-router.js"></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body><div id="app">
+    <router-view></router-view>
+</div></body>
+
+
+
+<template type="x-template" id="temp-main">
+    <div id="frame-main" class="frame bg1">
+        <img src="img/bbtlogo.png" alt="bbtlogo">
+        <router-link to="form/sign"><img src="img/signup.png" alt="马上报名"></router-link>
+        <router-link to="introduce"><img src="img/introduction.png" alt="部门介绍"></router-link>
+        <router-link to="login"><img src="img/search.png" alt="报名查询"></router-link>
+        <p style="font-size: 40px;">点击报名查询可修改信息</p>
+        <div style="height: 400px;"></div>
+    </div>
+</template>
+
+<template type="x-template" id="temp-form">
+    <div id="frame-sign" class="frame" style="padding: 100px; overflow-y: scroll; width: calc(100% - 200px); height: calc(100% - 200px);">
+        <router-link to="/"><div class="btn-back"></div></router-link>
+        <h1 id="form-title">{{ formTitle }}</h1> 
+        <div class="form">
+            <div class="new-hr"></div>
+            <p>姓名<span v-if="this.$route.params.mode=='modify'">（不能修改）</span></p>
+            <p><input type="text" id="name" v-model="name" v-if="!(this.$route.params.mode=='modify')"></p>
+            <p v-if="this.$route.params.mode=='modify'">{{name}}</p>
+            <p>性别</p>
+            <p>
+                <input type="radio" name="gender" id="male" value="男" v-model="sex"><label for="male">男</label>
+                <input type="radio" name="gender" id="female" value="女" v-model="sex"><label for="female">女</label>
+            </p>
+            <p>年级</p>
+            <p>
+                <input type="radio" name="grade" id="grade1" value="grade1" v-model="grade"><label for="grade1">大一</label>
+                <input type="radio" name="grade" id="grade2" value="grade2" v-model="grade"><label for="grade2">大二</label>
+            </p>
+            <p>学院</p>
+            <select name="college" id="college" v-model="college">
+                <option v-for="one in dataCollege">{{one}}</option>
+            </select>
+            <p>宿舍</p>
+            <p><input type="text" id="dormitory" placeholder="按格式输入，如C1-111" v-model="dormitory"></p>
+            <p>手机<span v-if="this.$route.params.mode=='modify'">（不能修改）</span></p>
+            <p><input type="text" id="phone" placeholder="请输入11位手机号码" maxlength="11" v-model.lazy="tel" v-if="!(this.$route.params.mode=='modify')"></p>
+            <p v-if="this.$route.params.mode=='modify'">{{tel}}</p>
+            <p>第一意向</p>
+            <select name="intention1" id="intention1" v-model="first">
+                <option v-for="one in realIntention">{{one}}</option>
+            </select>
+            <p>第二意向</p>
+            <select name="intention2" id="intention2" v-model="second">
+                <option v-for="one in realIntention">{{one}}</option>
+            </select>
+            <p>是否服从调剂</p>
+            <p>
+                <input type="radio" name="assign" id="assign-yes" value="0" v-model="adjust"><label for="assign-yes">是</label>
+                <input type="radio" name="assign" id="assign-no" value="1" v-model="adjust"><label for="assign-no">否</label>
+            </p>
+            <p>简单介绍下自己吧</p>
+            <textarea id="introduce" v-model="description"></textarea>
+        </div>
+
+        <img v-bind:src="formBtn" alt="马上报名或修改信息" id="form-btn" v-on:click="validation()">
+    </div>
+</template>
+
+<template type="x-template" id="temp-introduce">
+    <div id="frame-introduce" class="frame">
+        <router-link to="/"><div class="btn-back"></div></router-link>
+        <h1 style="margin-top: 2em;">十大部门介绍</h1>
+        <h2 id="department-name">{{ curDepName }}</h2>
+        <div class="introduce-outframe">
+            <div class="btn-arrow" v-on:click="prev()"></div>
+            <div class="introduce" id="department-detail" v-html="curDepDescription"></div>
+            <div class="btn-arrow" style="transform: scale(0.8,0.75) rotate(180deg);" v-on:click="next()"></div>
+        </div>
+        <router-link to="form/sign" v-if="curDepId==2||curDepId==5||curDepId==6"><img src="img/sign.png" alt="马上报名" id="btn-introduce-sign"></router-link>
+        <div style="font-size: 45px; width: 80%; margin-top: 100px;" v-else>本学期只有技术部、视觉设计部和视频部接受招新，其他部门将于明年春季进行招新，该部门资料仅供参考，望周知</div>
+    </div>
+</template>
+
+<template type="x-template" id="temp-inquiry">
+    <div id="frame-inquiry" class="frame" style="padding: 100px; overflow-y: scroll; width: calc(100% - 200px); height: calc(100% - 200px);">
+        <router-link to="/"><div class="btn-back"></div></router-link>
+        <h1>我的报名信息</h1>
+        <div class="form span-margin-left">
+        <div class="new-hr"></div>
+            <p>姓名<span id="inquiry-name">{{dataQuery.name}}</span></p>
+            <p>性别<span id="inquiry-gender">{{dataQuery.sex}}</span></p>
+            <p>年级<span id="inquiry-grade">{{dataQuery.grade}}</span></p>
+            <p>学院<span id="inquiry-college">{{dataQuery.college}}</span></p>
+            <p>手机<span id="inquiry-phone">{{dataQuery.tel}}</span></p>
+            <p>第一意向<span id="inquiry-intention1">{{dataQuery.first}}</span></p>
+            <p>第二意向<span id="inquiry-intention2">{{dataQuery.second}}</span></p>
+            <p>是否服从调剂<span id="inquiry-assign">{{dataQuery.adjust}}</span></p>
+            <p>简单介绍下自己吧</p>
+            <div class="div-inquiry-introduce" style="border-width: 4px 0; border-color: white; border-style:solid;">{{dataQuery.description}}</div>
+        </div>
+
+        <img src="img/makeover.png" alt="立即修改" id="btn-main-modify" style="margin-top: 50px;" v-on:click="toModify()">
+    </div>
+</template>
+
+<template type="x-template" id="temp-success">
+    <div id="frame-success" class="frame" style="padding: 100px; overflow-y: scroll; width: calc(100% - 200px); height: calc(100% - 200px);">
+        <h1 style="margin-top: 40%;">{{ successTitle }}</h1>
+        <router-link to="/"><img src="img/back.png" alt="返回" style="margin-top: 50%;"></router-link>
+    </div>
+</template>
+
+<template type="x-template" id="temp-login">
+    <div id="frame-login" class="frame" style="padding: 100px; overflow-y: scroll; width: calc(100% - 200px); height: calc(100% - 200px);">
+        <router-link to="/"><div class="btn-back"></div></router-link>
+        <h1 style="margin-top: 40%;">登录</h1>
+        <div style="width: 100%; margin-bottom: 15%;">
+            <p>姓名</p>
+            <p><input type="text" id="login-name" v-model="name"></p>
+            <p>手机号</p>
+            <p><input type="text" id="login-tel" v-model="tel"></p>
+        </div>
+        <img src="img/search.png" alt="确认查询" v-on:click="login()">
+    </div>
+</template>
+
+<script type="text/javascript" src="main.js"></script>
+
+</html>
