@@ -70,8 +70,13 @@ var router = new VueRouter({
               '轻工科学与工程学院',
               '食品科学与工程学院',
             ],
-            realIntention: ['技术部', '视觉设计部', '视频部'],
-            campusData: ['大学城校区', '国际校区', '五山校区']
+            realIntention: [
+              '技术部-代码组',
+              '技术部-产品设计组',
+              '视觉设计部',
+              '视频部',
+            ],
+            campusData: ['大学城校区', '国际校区', '五山校区'],
           };
         },
         computed: {
@@ -124,12 +129,11 @@ var router = new VueRouter({
                 case 200:
                   router.push('/success/sign');
                   break;
-                case 400:
-                  newAlert('报名失败，手机号错误或是其他参数错误');
+                case 500:
+                  newAlert('服务器错误');
                   break;
-                case 409:
-                  newAlert('报名失败，该手机号已报名');
-                  break;
+                default:
+                  newAlert(JSON.parse(xhr.responseText).msg);
               }
             }
             post('/user', this.dataSend, sendSuccess);
@@ -141,9 +145,11 @@ var router = new VueRouter({
                   newAlert('修改成功！');
                   router.push('/');
                   break;
-                case 404:
-                  newAlert('修改失败，手机号错误或是姓名错误');
+                case 500:
+                  newAlert('服务器错误');
                   break;
+                default:
+                  newAlert(JSON.parse(xhr.responseText).msg);
               }
             }
             put('/user', this.dataSend, sendSuccess);
@@ -170,12 +176,12 @@ var router = new VueRouter({
           }
         },
         watch: {
-          tel: function () {
-            if (this.tel.length != 11 || this.tel[0] != 1) {
-              newAlert('手机号不合法');
-              this.tel = '';
-            }
-          },
+          // tel: function () {
+          //   if (this.tel.length != 11 || this.tel[0] != 1) {
+          //     newAlert('手机号不合法');
+          //     this.tel = '';
+          //   }
+          // },
           // second: function () {
           // if (this.second == this.first) {
           //   newAlert('虽然很想实现这个志愿，但两个志愿不能重复哦~');
@@ -212,7 +218,7 @@ var router = new VueRouter({
               {
                 depName: '行政人事部',
                 depDescription:
-                  '<p>作为百步梯的元老部门，我们是百步梯所有大型活动的基础，管理着百步梯内部的物资、财务、行政、人力。我们统筹管理办公室，分配梯内物资；我们是百步梯的财政管家，保障一切活动经费；我们是百步梯制度的创造者与规范者，也是百步梯对外交流的枢纽；我们安排着梯内人力资源配置，负责干事的招募、选拔、培训和考核。此外，我们负责梯内大型活动的承办，招新面试由我们推动，换届大会由我们组织，经验交流会由我们见证。我们的工作为百步梯平稳高效地运作提供了必要保障。</p>',
+                  '<p>作为百步梯的元老部门，我们是百步梯所有大型活动的基础，管理着百步梯内部的物资、财务、行政、人力。</p><p>我们统筹管理办公室，分配梯内物资；我们是百步梯的财政管家，保障一切活动经费；</p><p>我们是百步梯制度的创造者与规范者，也是百步梯对外交流的枢纽；</p><p>我们安排着梯内人力资源配置，负责干事的招募、选拔、培训和考核。</p><p>此外，我们负责梯内大型活动的承办，招新面试由我们推动，换届大会由我们组织，经验交流会由我们见证。</p><p>我们的工作为百步梯平稳高效地运作提供了必要保障。</p>',
               },
               {
                 depName: '广播台',
@@ -227,7 +233,7 @@ var router = new VueRouter({
               {
                 depName: '运营推广部',
                 depDescription:
-                  '<p>灵感于此处萌芽，创意在这里迸发，我们是百步梯的创新大脑，也是对外交流的窗户。我们通过活动推广百步梯的品牌，“雕刻时光”电影文化节、“治愈系”、“开学季”及“毕业季”文化节、新媒体大赛等引人瞩目的活动在我们手中诞生；与此同时，我们还负责百步梯线上小程序--波板糖的运营以及与外校合作联谊。如果你有丰富的创意，那么就快来加入我们运营推广部吧！</p>',
+                  '<p>灵感于此处萌芽，创意在这里迸发，我们是百步梯的创新大脑，也是对外交流的窗户。我们通过活动推广百步梯的品牌，“雕刻时光”电影文化节、“治愈系”、“开学季”及“毕业季”文化节、新媒体大赛等引人瞩目的活动在我们手中诞生；与此同时，我们还负责百步梯线上小程序——波板糖的运营以及与外校合作联谊。如果你有丰富的创意，那么就快来加入我们运营推广部吧！</p>',
               },
             ],
           };
@@ -303,8 +309,11 @@ var router = new VueRouter({
                     query: JSON.parse(xhr.responseText).data,
                   });
                   break;
-                case 404:
-                  newAlert('好像写错信息了，别着急哦，改一下');
+                case 500:
+                  newAlert('服务器错误');
+                  break;
+                default:
+                  newAlert(JSON.parse(xhr.responseText).msg);
               }
             }
             get(url, onloaded);
