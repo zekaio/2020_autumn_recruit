@@ -1,39 +1,8 @@
-// window.onload = () => {
-
-//   // console.log('test')
-// // let  frame_login = document.getElementById("frame-login");
-// // console.log(frame_login);
-// //   // console.log(frame_login.clientHeight);
-// //   // console.log(frame_login.style.height);
-// //   frame_login.style.height = frame_login.clientHeight + "px";
-// //   console.log(frame_login.style.height);
-
-//   // let height = document.body.clientHeight;
-//   // console.log(height);
-//   // console.log(document.body.style.height);
-//   // document.body.style.height = height+'px';
-//   // console.log(document.body.style.height);
-
-
-// //   // login_tel - document.getElementById('login-tel');
-// //   // login_tel.addEventListener()
-// //   alert(frame_login.style.height)
-
-//   // $('#login-tel').focus(()=>{
-//   // console.log(frame_login.style.height);
-//   // alert(frame_login.style.height)
-//   //   console.log('focus')
-//   // })
-
-//   // $('#login-tel').blur(()=>{
-//   //   document.getElementById('login-tel').scrollTo(0, 0);
-//   // })
-// };
-// // alert('修改')
-// // document.onkeydown = (e)=>{
-// //   alert(document.getElementById("frame-login").style.height)
-
-// // }
+window.onload = () => {
+  let height = document.body.offsetHeight;
+  console.log(height);
+  document.body.style.backgroundSize = `100vw ${height}px`;
+};
 
 var router = new VueRouter({
   routes: [
@@ -148,9 +117,10 @@ var router = new VueRouter({
             post((url = "/user"), (postObj = this.$data.userData));
           },
           validation() {
+            // let map = ['姓名', '性别','年级','校区','学院','宿舍','手机','第一志愿','第二志愿','自我介绍']
             for (i in this.$data) {
               if (this.$data[i] == "") {
-                newAlert("所有的表单项都是必填的，有表单为空，请检查~");
+                newAlert(`信息填写不符合要求，请检查一下再提交噢`);
                 return false;
               }
             }
@@ -212,7 +182,7 @@ var router = new VueRouter({
             this.description = query.description;
           }
         },
-        watch: {
+        // watch: {
           // tel: function () {
           //   if (this.tel.length != 11 || this.tel[0] != 1) {
           //     newAlert('手机号不合法');
@@ -225,7 +195,7 @@ var router = new VueRouter({
           //   this.second = '';
           // }
           // },
-        },
+        // },
       },
     },
 
@@ -357,10 +327,10 @@ var router = new VueRouter({
           },
         },
         mounted() {
-          console.log(document.getElementById('frame-login'));
-          let frame = document.getElementById('frame-login');
-          console.log(frame.clientHeight)
-          frame.style.height = frame.clientHeight+'px'
+          console.log(document.getElementById("frame-login"));
+          let frame = document.getElementById("frame-login");
+          console.log(frame.clientHeight);
+          frame.style.height = frame.clientHeight + "px";
         },
       },
     },

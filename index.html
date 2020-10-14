@@ -27,7 +27,8 @@
   </body>
 
   <template type="x-template" id="temp-main">
-    <div id="frame-main" class="frame bg1">
+    <div id="frame-main" class="frame">
+      <div style="margin: auto; text-align: center;">
       <img src="img/bbtlogo.png" alt="bbtlogo" />
       <router-link to="form/sign"
         ><img src="img/signup.png" alt="马上报名"
@@ -39,7 +40,8 @@
         ><img src="img/search.png" alt="报名查询"
       /></router-link>
       <!-- <p style="font-size: 40px;">点击报名查询可修改信息</p> -->
-      <div style="height: 400px"></div>
+      <!-- <div style="height: 400px"></div>   -->
+    </div>
     </div>
   </template>
 
@@ -86,6 +88,7 @@
             id="female"
             value="女"
             v-model="sex"
+            style="margin-left: 1.2em;"
           /><label for="female">女</label>
         </p>
         <p>年级</p>
@@ -279,7 +282,7 @@
       "
     >
       <router-link to="/"><div class="btn-back"></div></router-link>
-      <h1 style="margin-top: 15vw">报名查询</h1>
+      <h1 style="margin-top: 30vw">报名查询</h1>
       <div style="width: 100%; margin-bottom: 15vw">
         <p>姓名</p>
         <p><input type="text" id="login-name" v-model="name" /></p>
