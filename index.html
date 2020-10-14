@@ -5,7 +5,7 @@
     <!-- <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"> 使用逻辑分辨率 -->
     <meta content="user-scalable=no" name="viewport" />
     <!--使用物理分辨率 -->
-    <title>百步梯秋季招新报名</title>
+    <title>百步梯秋季招新</title>
     <!-- <style type="text/css">
       body,
       textarea,
@@ -28,20 +28,18 @@
 
   <template type="x-template" id="temp-main">
     <div id="frame-main" class="frame">
-      <div style="margin: auto; text-align: center;">
-      <img src="img/bbtlogo.png" alt="bbtlogo" />
-      <router-link to="form/sign"
-        ><img src="img/signup.png" alt="马上报名"
-      /></router-link>
-      <router-link to="introduce"
-        ><img src="img/introduction.png" alt="部门介绍"
-      /></router-link>
-      <router-link to="login"
-        ><img src="img/search.png" alt="报名查询"
-      /></router-link>
-      <!-- <p style="font-size: 40px;">点击报名查询可修改信息</p> -->
-      <!-- <div style="height: 400px"></div>   -->
-    </div>
+      <div style="margin: auto; text-align: center">
+        <img src="img/bbtlogo.png" alt="bbtlogo" />
+        <router-link to="form/sign"
+          ><img src="img/signup.png" alt="马上报名"
+        /></router-link>
+        <router-link to="introduce"
+          ><img src="img/introduction.png" alt="部门介绍"
+        /></router-link>
+        <router-link to="login"
+          ><img src="img/search.png" alt="报名查询"
+        /></router-link>
+      </div>
     </div>
   </template>
 
@@ -60,10 +58,7 @@
       <h1 id="form-title">{{ formTitle }}</h1>
       <div class="form">
         <div class="new-hr"></div>
-        <p>
-          姓名
-          <!-- <span v-if="this.$route.params.mode=='modify'">（不能修改）</span> -->
-        </p>
+        <p>姓名</p>
         <p>
           <input
             type="text"
@@ -88,7 +83,7 @@
             id="female"
             value="女"
             v-model="sex"
-            style="margin-left: 1.2em;"
+            style="margin-left: 1.2em"
           /><label for="female">女</label>
         </p>
         <p>年级</p>
@@ -127,10 +122,7 @@
             v-model="dormitory"
           />
         </p>
-        <p>
-          手机
-          <!-- <span v-if="this.$route.params.mode=='modify'">（不能修改）</span> -->
-        </p>
+        <p>手机</p>
         <p>
           <input
             type="tel"
@@ -183,8 +175,13 @@
   <template type="x-template" id="temp-introduce">
     <div id="frame-introduce" class="frame">
       <router-link to="/"><div class="btn-back"></div></router-link>
-      <div style="margin-top: 5vh; font-size: 2em;">部门介绍</div>
-      <div style="margin-top: 3vh; margin-bottom: 2vh; font-size: 1.5em;" id="department-name">{{ curDepName }}</div>
+      <div style="margin-top: 5vh; font-size: 2em">部门介绍</div>
+      <div
+        style="margin-top: 3vh; margin-bottom: 2vh; font-size: 1.5em"
+        id="department-name"
+      >
+        {{ curDepName }}
+      </div>
       <div class="introduce-outframe">
         <div class="btn-arrow" v-on:click="prev()"></div>
         <div
@@ -200,7 +197,7 @@
       </div>
       <router-link to="form/sign" v-if="curDepId==0||curDepId==1||curDepId==2"
         ><img
-          src="img/sign.png"
+          src="img/signup.png"
           alt="马上报名"
           id="btn-introduce-sign"
           class="toSign"
@@ -276,10 +273,7 @@
     <div
       id="frame-login"
       class="frame"
-      style="
-        padding:0 100px;
-        width: calc(100% - 200px);
-      "
+      style="padding: 0 100px; width: calc(100% - 200px)"
     >
       <router-link to="/"><div class="btn-back"></div></router-link>
       <h1 style="margin-top: 30vw">报名查询</h1>

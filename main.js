@@ -1,6 +1,5 @@
 window.onload = () => {
   let height = document.body.offsetHeight;
-  console.log(height);
   document.body.style.backgroundSize = `100vw ${height}px`;
 };
 
@@ -182,20 +181,6 @@ var router = new VueRouter({
             this.description = query.description;
           }
         },
-        // watch: {
-          // tel: function () {
-          //   if (this.tel.length != 11 || this.tel[0] != 1) {
-          //     newAlert('手机号不合法');
-          //     this.tel = '';
-          //   }
-          // },
-          // second: function () {
-          // if (this.second == this.first) {
-          //   newAlert('虽然很想实现这个志愿，但两个志愿不能重复哦~');
-          //   this.second = '';
-          // }
-          // },
-        // },
       },
     },
 
@@ -327,9 +312,7 @@ var router = new VueRouter({
           },
         },
         mounted() {
-          console.log(document.getElementById("frame-login"));
           let frame = document.getElementById("frame-login");
-          console.log(frame.clientHeight);
           frame.style.height = frame.clientHeight + "px";
         },
       },
@@ -341,7 +324,8 @@ var routeVue = new Vue({
   router,
 }).$mount("#app");
 
-var baseurl = "https://zekaio.cn/2020_autumn/api";
+var baseurl = "https://hemc.100steps.net/2020/autumn_recruit/api";
+// var baseurl = "https://zekaio.cn/2020_autumn/api";
 // var baseurl = 'http://127.0.0.1:5000';
 var xhr = new XMLHttpRequest();
 function get(url, onloadFun, onerrorFun) {
